@@ -19,8 +19,8 @@ const Home = ({ products, bannerData }) => {
       </div>
 
       <div className='products-container'>
-        {/**Loop over the products (received as a prop from sanity) to return each product's name */}
-        {products?.map((product) => product.name)}
+        {/**Loop over the products (received as a prop from sanity) to return each product's entire details */}
+        {products?.map((product) => <Product key={product._id} product={product} />)}
       </div>
 
       <FooterBanner />
