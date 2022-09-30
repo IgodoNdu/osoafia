@@ -23,7 +23,8 @@ const Home = ({ products, bannerData }) => {
         {products?.map((product) => <Product key={product._id} product={product} />)}
       </div>
 
-      <FooterBanner />
+      {/**If bannerData exists, return the first index. See console.log of bannerData, and identify the needed details are on the first index */}
+      <FooterBanner footerBanner={bannerData && bannerData[0]} />
     </>
   )
 }
