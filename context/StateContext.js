@@ -42,3 +42,6 @@ export const StateContext = ({ children }) => {
         </Context.Provider>
     )
 }
+
+//to more easily grab the state
+export const useStateContext = () => useContext(Context);
