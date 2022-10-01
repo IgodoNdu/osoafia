@@ -3,6 +3,8 @@ import React, { useState } from 'react'
 //importing the icons for use
 import { AiOutlineMinus, AiOutlinePlus, AiFillStar, AiOutlineStar } from 'react-icons/ai';
 import { Product } from '../../components';
+//using the global Context 
+import { useStateContext } from '../../context/StateContext'
 
 //using sanity
 import { client, urlFor } from '../../lib/client'
@@ -13,6 +15,9 @@ const ProductDetails = ({ product, similarProducts }) => {
 
   //creating a new state field for (building the product image detail (hover) feature: Image carousel)
   const [index, setIndex] = useState(0);
+
+  //using the state like a hook
+  const { qty, incQty, decQty } = useStateContext();
 
   return (
     <div>
@@ -48,9 +53,9 @@ const ProductDetails = ({ product, similarProducts }) => {
           <div className='quantity'>
             <h3>Quantity: </h3>
             <p className='quantity-desc'>
-              <span className='minus' onClick=''><AiOutlineMinus /></span>
-              <span className='num' onClick=''>0</span>
-              <span className='plus' onClick=''><AiOutlinePlus /></span>
+              <span className='minus' onClick={decQty}><AiOutlineMinus /></span>
+              <span className='num' onClick=''>{qty}</span>
+              <span className='plus' onClick={incQty}><AiOutlinePlus /></span>
             </p>
           </div>
           <div className='buttons'>
