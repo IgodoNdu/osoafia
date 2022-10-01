@@ -2,6 +2,7 @@
 import React from 'react'
 //importing the icons for use
 import { AiOutlineMinus, AiOutlinePlus, AiFillStar, AiOutlineStar } from 'react-icons/ai';
+import { Product } from '../../components';
 
 //using sanity
 import { client, urlFor } from '../../lib/client'
@@ -51,6 +52,18 @@ const ProductDetails = ({ product, similarProducts }) => {
           <div className='buttons'>
             <button type='button' className='add-to-cart' onClick=''>Add to Cart</button>
             <button type='button' className='buy-now' onClick=''>Buy Now</button>
+          </div>
+        </div>
+      </div>
+
+      {/**recommended products section */}
+      <div className='maylike-products-wrapper'>
+        <h2>You may also like</h2>
+        <div className='marquee'>
+          <div className='maylike-products-container track'>
+            {similarProducts.map((item) => (
+              <Product key={item._id} product={item} />
+            ))}
           </div>
         </div>
       </div>
