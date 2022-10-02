@@ -12,7 +12,7 @@ const Cart = () => {
   //set up reference to the cart
   const cartRef = useRef();
   //Needed data/values from context
-  const { totalPrice, totalQuantities, cartItems, setShowCart, toggleCartItemQuantity } = useStateContext();
+  const { totalPrice, totalQuantities, cartItems, setShowCart, toggleCartItemQuantity, onRemove } = useStateContext();
 
 
   return (
@@ -51,7 +51,7 @@ const Cart = () => {
                       <span className='plus' onClick={() => toggleCartItemQuantity(item._id, 'inc')}><AiOutlinePlus /></span>
                     </p>
                   </div>
-                  <button type='button' className='remove-item' onClick=''>
+                  <button type='button' className='remove-item' onClick={() => onRemove(item)}>
                     <TiDeleteOutline />
                   </button>
                 </div>
