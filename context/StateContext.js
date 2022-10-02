@@ -14,6 +14,9 @@ export const StateContext = ({ children }) => {
     const [totalQuantities, setTotalQuantities] = useState(0);
     const [qty, setQty] = useState(1);
 
+    let foundProduct;
+    let index;
+
     //dynamic update function for adding to cart (takes 2 params, product to be added, and the qty)
     const onAdd = (productToAdd, quantityToAdd) => {
         //update the total price state
@@ -43,6 +46,31 @@ export const StateContext = ({ children }) => {
         toast.success(`${qty} ${productToAdd.name} added to the cart`) // notification message/prompt
     }
 
+    //handling cartItem Quantity updates
+    const toggleCartItemQuantity = (id, value) => {
+        //find the item to toggle
+        foundProduct = cartItems.find((cartItem) => cartItem._id === id)
+        //find the index of the foundProduct item on the cart
+        index = cartItems.findIndex((cartItem) => cartItem._id === id)
+        //short cut logic: use filter to filter-off foundProduct from the cart (avoid duplication) -Note: not to mutate the state (REACT RULE)
+        const newCartItems = cartItems.filter((cartItem) => cartItem._id !== id);
+
+        //value: will be a string to conote a decrement/increment action
+        if(value === 'inc') {
+            //update the cartItems (with the foundProduct), the price & quantities
+            setCartItems([...newCartItems, {...foundProduct, quantity: foundProduct.quantity + 1}]);
+            setTotalPrice((prevTotalPrice) => prevTotalPrice + foundProduct.price);
+            setTotalQuantities((prevTotalQty) => prevTotalQty + 1);
+        } else if(value === 'dec') {
+            //check if foundProduct exists in the cart
+            if(foundProduct.quantity > 1) {
+                setCartItems([...newCartItems, {...foundProduct, quantity: foundProduct.quantity - 1}]);
+                setTotalPrice((prevTotalPrice) => prevTotalPrice - foundProduct.price);
+                setTotalQuantities((prevTotalQty) => prevTotalQty - 1);
+            }
+        }
+    }
+
     //dynamic update functions
     const incQty = () => {
         setQty((prevQty) => prevQty + 1);
@@ -68,6 +96,7 @@ export const StateContext = ({ children }) => {
                 incQty,
                 decQty,
                 onAdd,
+                toggleCartItemQuantity,
             }}>
             {children}
         </Context.Provider>

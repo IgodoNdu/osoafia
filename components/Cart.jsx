@@ -12,7 +12,7 @@ const Cart = () => {
   //set up reference to the cart
   const cartRef = useRef();
   //Needed data/values from context
-  const { totalPrice, totalQuantities, cartItems, setShowCart } = useStateContext();
+  const { totalPrice, totalQuantities, cartItems, setShowCart, toggleCartItemQuantity } = useStateContext();
 
 
   return (
@@ -46,9 +46,9 @@ const Cart = () => {
                 <div className='flex bottom'>
                   <div>
                     <p className='quantity-desc'>
-                      <span className='minus' onClick=''><AiOutlineMinus /></span>
-                      <span className='num' onClick=''></span>
-                      <span className='plus' onClick=''><AiOutlinePlus /></span>
+                      <span className='minus' onClick={() => toggleCartItemQuantity(item._id, 'dec')}><AiOutlineMinus /></span>
+                      <span className='num' onClick=''>{item.quantity}</span>
+                      <span className='plus' onClick={() => toggleCartItemQuantity(item._id, 'inc')}><AiOutlinePlus /></span>
                     </p>
                   </div>
                   <button type='button' className='remove-item' onClick=''>
@@ -65,6 +65,9 @@ const Cart = () => {
             <div className='total'>
               <h3>Subtotal:</h3>
               <h3>${totalPrice}</h3>
+            </div>
+            <div className='btn-container'>
+              <button type='button' className='btn' onClick=''>Pat With Stripe</button>
             </div>
           </div>
         )}
